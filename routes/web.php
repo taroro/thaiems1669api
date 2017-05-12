@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/accident/{id?}', 'AccidentCaseController@index');
+Route::post('/api/accident', 'AccidentCaseController@store');
+Route::post('/api/accident/{id}', 'AccidentCaseController@update');
+Route::delete('/api/accident/{id}', 'AccidentCaseController@destroy');
