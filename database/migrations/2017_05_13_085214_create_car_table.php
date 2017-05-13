@@ -13,7 +13,13 @@ class CreateCarTable extends Migration
      */
     public function up()
     {
-        //
+        // Create car table
+        Schema::create('car', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('car_license_no', 255);
+            $table->integer('car_status');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -24,5 +30,6 @@ class CreateCarTable extends Migration
     public function down()
     {
         //
+        Schema::drop('car');
     }
 }
