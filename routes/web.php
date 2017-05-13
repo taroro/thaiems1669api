@@ -12,10 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $request = Request::create('http://localhost:8000/api/accident', 'GET');
+    //echo "<pre>";
+    $results = json_decode(Route::dispatch($request)->getContent());
+    //echo "</pre>";
+    return view('welcome', ["results" => $results]);
 });
 
-Route::get('/api/accident/{id?}', 'AccidentCaseController@index');
-Route::post('/api/accident', 'AccidentCaseController@store');
-Route::post('/api/accident/{id}', 'AccidentCaseController@update');
-Route::delete('/api/accident/{id}', 'AccidentCaseController@destroy');
+Route::get('/api/accident/{id?}', 'AccidentController@index');
+Route::post('/api/accident', 'AccidentController@store');
+Route::post('/api/accident/{id}', 'AccidentController@update');
+Route::delete('/api/accident/{id}', 'AccidentController@destroy');

@@ -29,6 +29,7 @@ class CreateCaseTable extends Migration
             $table->timestamp('accident_submited_timestamp')->nullable();
             $table->timestamp('accident_completed_timestamp')->nullable();
             $table->integer('accident_status');
+            $table->timestamps();
 
         });
     }
