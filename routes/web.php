@@ -19,7 +19,11 @@ Route::get('/', function () {
     return view('welcome', ["results" => $results]);
 });
 
+// API accident
 Route::get('/api/accident/{id?}', 'AccidentController@index');
+Route::get('/api/accident/search/{keyword?}', 'AccidentController@search');
 Route::post('/api/accident', 'AccidentController@store');
 Route::post('/api/accident/{id}', 'AccidentController@update');
 Route::delete('/api/accident/{id}', 'AccidentController@destroy');
+
+// API car

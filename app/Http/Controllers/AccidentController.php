@@ -5,19 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AccidentModel;
 
-class AccidentController extends Controller
-{
-    public function index($id = null)
-    {
+class AccidentController extends Controller {
+    public function index($id = null) {
         if($id == null) {
-            return AccidentModel::orderBy('accident_level_id', 'asc')->get();
+            return $_GET['callback'] . "(" . json_encode(AccidentModel::orderBy('accident_level_id', 'asc')->get()) . ")";
         } else {
-            return $this->show($id);
+            return $_GET['callback'] . "(" . json_encode($this->show($id)) . ")";
         }
     }
 
-    public function store(Request $request)
-    {
+    public function search($keyword = null) {
+        if($keyword == null) {
+            return AccidentModel::orderBy('accident_level_id', 'asc')->get();
+        } else {
+            return AccidentModel::where('accident_name', 'like', '%'.$keyword.'%')
+                ->orWhere('accident_tel', 'like', '%'.$keyword.'%')
+                ->orWhere('accident_description', 'like', '%'.$keyword.'%')
+                ->orderBy('accident_level_id', 'asc')
+                ->get();
+        }
+    }
+
+    public function store(Request $request) {
         $accident = new AccidentModel;
         $accident->accident_name = $request->input('accident_name');
         $accident->accident_tel = $request->input('accident_tel');
@@ -36,13 +45,11 @@ class AccidentController extends Controller
         return 'Accident record successfully created with id ' . $accident->id;
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         return AccidentModel::find($id);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         $accident = AccidentModel::find($id);
         $accident->accident_name = $request->input('accident_name');
         $accident->accident_tel = $request->input('accident_tel');
@@ -61,8 +68,7 @@ class AccidentController extends Controller
         return 'Accident record successfully updated with id ' . $accident->id;
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
         $accident = AccidentModel::find($id)->delete();
         return 'Accident record successfully deleted';
     }
