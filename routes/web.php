@@ -12,18 +12,14 @@
 */
 
 Route::get('/', function () {
-    $request = Request::create('http://localhost:8000/api/accident', 'GET');
-    //echo "<pre>";
-    $results = json_decode(Route::dispatch($request)->getContent());
-    //echo "</pre>";
-    return view('welcome', ["results" => $results]);
+    return view('index');
 });
 
-// API accident
-Route::get('/api/accident/{id?}', 'AccidentController@index');
-Route::get('/api/accident/search/{keyword?}', 'AccidentController@search');
-Route::post('/api/accident', 'AccidentController@store');
-Route::post('/api/accident/{id}', 'AccidentController@update');
-Route::delete('/api/accident/{id}', 'AccidentController@destroy');
+// API Accident
+Route::get('/api/accident/{id?}', 'ThaiEms1669\AccidentController@index'); // Get accident's detail by id, Empty id to list all
+// Route::get('/api/accident/search/{keyword?}', 'ThaiEms1669\AccidentController@search');
+Route::post('/api/accident', 'ThaiEms1669\AccidentController@insert'); // Insert accident to DB
+Route::post('/api/accident/{id}', 'ThaiEms1669\AccidentController@update'); // Update accident detail by id
+Route::delete('/api/accident/{id}', 'ThaiEms1669\AccidentController@delete'); // Delete accident from DB by id
 
-// API car
+// API Car

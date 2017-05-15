@@ -79,7 +79,7 @@
             <div class="col-md-9">
                 <div class="row clearfix">
                     <div class="container-fluid">
-                        <div style="height:calc(100vh - 256px);" id="map"></div>
+                        <div style="height:calc(100vh - 256px);" id="map" class="google-map">{!! Mapper::render() !!}</div>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -145,19 +145,6 @@
     </div>
 </div>
 <!-- Scripts -->
-<div class="google-map">
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 17,
-                center: {lat: 16.54531, lng: 104.72351}
-            });
-        }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?v=3.27&key=AIzaSyDZyk86qgTBUA39xLpKqGQ5lX7IpyqdSH0&signed_in=true&callback=initMap">
-    </script>
-</div>
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script>
