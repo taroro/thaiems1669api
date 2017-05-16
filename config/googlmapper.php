@@ -20,7 +20,7 @@ return array(
     | A Google API key to link Googlmapper to Google's API.
     |
     */
-    'key' => env('GOOGLE_API_KEY', 'AIzaSyDZyk86qgTBUA39xLpKqGQ5lX7IpyqdSH0'),
+    'key' => env('GOOGLE_API_KEY', 'AIzaSyAmc2mG8KSZB2lnmiTJ9nS7CIPvt2uxBHE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return array(
     | Perform the loading and rendering of Googlmapper map asynchronously.
     |
     */
-    'async' => false,
+    'async' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ return array(
     | Automatically add the logged in Google user to Googlmapper displayed map.
     |
     */
-    'user' => false,
+    'user' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
     | location.
     |
     */
-    'locate' => false,
+    'locate' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -173,7 +173,7 @@ return array(
         | Display an animation effect for markers. (NONE|DROP|BOUNCE)
         |
         */
-        'animation' => 'NONE',
+        'animation' => 'DROP',
 
     ),
 

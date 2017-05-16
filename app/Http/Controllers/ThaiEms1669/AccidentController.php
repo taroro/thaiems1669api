@@ -21,12 +21,7 @@ class AccidentController extends Controller {
     }
 
     public function show($id) {
-        $result = json_encode(Accident::find($id));
-        if($_GET['callback'] == null) {
-            return $result;
-        } else {
-            return $_GET['callback'] . "(" . $result .")";
-        }
+        return $result = json_encode(Accident::find($id));
     }
 
     public function insert(Request $request) {
@@ -50,7 +45,7 @@ class AccidentController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $accident = AccidentModel::find($id);
+        $accident = Accident::find($id);
         $accident->accident_title = trim($request->input('accident_title'));
         $accident->accident_telno = trim($request->input('accident_telno'));
         $accident->accident_description = trim($request->input('accident_description'));

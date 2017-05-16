@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/accident/detail/{id?}', 'AccidentController@detail');
+Route::get('/accident/edit/{id?}', 'AccidentController@edit');
+
 // API Accident
 Route::get('/api/accident/{id?}', 'ThaiEms1669\AccidentController@index'); // Get accident's detail by id, Empty id to list all
 // Route::get('/api/accident/search/{keyword?}', 'ThaiEms1669\AccidentController@search');
