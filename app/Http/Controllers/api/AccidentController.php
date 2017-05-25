@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\ThaiEms1669;
+namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Accident;
+use App\libraries\FCM;
 
 class AccidentController extends Controller {
     public function index($id = null) {
@@ -27,6 +28,7 @@ class AccidentController extends Controller {
     public function insert(Request $request) {
         $accident = new Accident;
         $accident->accident_title = trim($request->input('accident_title'));
+        $accident->accident_contact_name = trim($request->input('accident_contact_name'));
         $accident->accident_telno = trim($request->input('accident_telno'));
         $accident->accident_description = trim($request->input('accident_description'));
         $accident->accident_level_id = $request->input('accident_level_id');
@@ -36,6 +38,7 @@ class AccidentController extends Controller {
         $accident->accident_create_timestamp = \Carbon\Carbon::now()->toDateTimeString();
         $accident->accident_status = 0;
         $accident->save();
+
         $result = json_encode(array("result" => 1, "message" => "Accident record successfully created with id " . $accident->id));
         if(isset($_GET['callback'])) {
             return $_GET['callback'] . "(" . $result .")";
@@ -47,6 +50,7 @@ class AccidentController extends Controller {
     public function update(Request $request, $id) {
         $accident = Accident::find($id);
         $accident->accident_title = trim($request->input('accident_title'));
+        $accident->accident_contact_name = trim($request->input('accident_contact_name'));
         $accident->accident_telno = trim($request->input('accident_telno'));
         $accident->accident_description = trim($request->input('accident_description'));
         $accident->accident_level_id = $request->input('accident_level_id');

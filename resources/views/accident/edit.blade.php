@@ -40,31 +40,7 @@
             <a class="navbar-brand" href="#">1669 NAVI</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">หน้าแรก <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">เหตุด่วน/อุบัติเหตุ</a></li>
-                <li><a href="#">รถฉุกเฉิน/กู้ภัย</a></li>
-            </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="ค้นหาเหตุด่วน/อุบัติเหตุ">
-                </div>
-                <button type="submit" class="btn btn-default">ค้นหา</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ข้อมูลผู้ใช้ <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="login">Log out</a></li>
-                    </ul>
-                </li>
-            </ul>
+            @include('menu.header')
         </div>
     </div>
 </div>
@@ -176,79 +152,34 @@
     </div>
 </div>
 
+
 <!-- Modal -->
 <div id="response_modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Update Successfully</h4>
-            </div>
-            <div class="modal-body">
-                <p id="response_message">Accident's detail successfully updated</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="modal">&times;</button><h4>Successful!!!</h4>
+            <p>Accident's detail successfully updated.</p>
         </div>
     </div>
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/gmap.control.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&signed_in=true&key=AIzaSyAmc2mG8KSZB2lnmiTJ9nS7CIPvt2uxBHE" async defer>
 </script>
 <script>
-    var map;
-    var markers = [];
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 16
         })
     }
-
-    function gotoLocation(lat, lng) {
-        var pos = {
-            lat: lat,
-            lng: lng
-        };
-        map.setCenter(pos);
-        clearMarkers();
-        addMarker(pos);
-    }
-
-    function clearMarkers() {
-        setMapOnAll(null);
-    }
-
-    function setMapOnAll(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
-
-    function addMarker(location) {
-        var marker = new google.maps.Marker({
-            position: location,
-            map: map
-        });
-        markers.push(marker);
-    }
-
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    }
-
     function saveChange() {
         $.post(
             "http://localhost:8000/api/accident/{{ $id }}",
             {
                 accident_title: $("#accident_title").val(),
+                accident_contact_name: $("#accident_contact_name").val(),
                 accident_telno: $("#accident_telno").val(),
                 accident_description: $("#accident_description").val(),
                 accident_level_id: $("#accident_level").val(),
@@ -272,7 +203,7 @@
             success: function (data){
                 var accident = JSON.parse(data);
                 $("#edit_title").text("Edit Accident's Detail");
-                $("#accident_contact_name").val();
+                $("#accident_contact_name").val(accident.accident_contact_name);
                 $("#accident_title").val(accident.accident_title);
                 $("#accident_telno").val(accident.accident_telno);
                 $("#accident_description").text(accident.accident_description);
