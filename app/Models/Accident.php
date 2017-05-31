@@ -9,6 +9,7 @@ class Accident extends Model {
     protected $fillable = array(
         'id'
     , 'accident_title'
+    , 'accident_contact_name'
     , 'accident_telno'
     , 'accident_description'
     , 'accident_level_id'

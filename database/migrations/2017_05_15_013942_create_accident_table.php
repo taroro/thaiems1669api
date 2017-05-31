@@ -14,6 +14,7 @@ class CreateAccidentTable extends Migration {
         Schema::create('accident', function (Blueprint $table) {
             $table->increments('id'); // Primary Key, Auto increment
             $table->string('accident_title', 255); // Accident's title. length:255
+            $table->string('accident_contact_name', 255); // Accident's title. length:255
             $table->string('accident_telno', 50); // Contact Person's tel no. length:50
             $table->string('accident_description'); // Accident's description
             $table->integer('accident_level_id'); // Foreign Key -> table:accident_level.id

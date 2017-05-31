@@ -42,31 +42,7 @@
             <a class="navbar-brand" href="#">1669 NAVI</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">หน้าแรก <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">เหตุด่วน/อุบัติเหตุ</a></li>
-                <li><a href="#">รถฉุกเฉิน/กู้ภัย</a></li>
-            </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="ค้นหาเหตุด่วน/อุบัติเหตุ">
-                </div>
-                <button type="submit" class="btn btn-default">ค้นหา</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ข้อมูลผู้ใช้ <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li class="divider"></li>
-                        <li><a href="login">Log out</a></li>
-                    </ul>
-                </li>
-            </ul>
+            @include('menu.header')
         </div>
     </div>
 </div>
@@ -119,15 +95,14 @@
 <!-- Scripts -->
 <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/gmap.control.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&signed_in=true&key=AIzaSyAmc2mG8KSZB2lnmiTJ9nS7CIPvt2uxBHE" async defer>
 </script>
 <script>
-    function toggleBounce() {
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16
+        })
     }
     $(document).ready(function() {
         $.ajax({
@@ -136,25 +111,12 @@
             success: function (data){
                 var accident = JSON.parse(data);
                 $("#accident_title").text(accident.accident_title);
-                $("#accident_contact_name").text();
+                $("#accident_contact_name").text(accident.accident_contact_name);
                 $("#accident_telno").text(accident.accident_telno);
                 $("#accident_description").text(accident.accident_description);
                 $("#accident_location").text(accident.accident_latitude + ', ' + accident.accident_longitude);
 
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 16
-                });
-                var pos = {
-                    lat: accident.accident_latitude,
-                    lng: accident.accident_longitude
-                };
-                map.setCenter(pos);
-                var marker = new google.maps.Marker({
-                    map: map,
-                    animation: google.maps.Animation.DROP,
-                    position: pos
-                });
-                marker.addListener('click', toggleBounce);
+                gotoLocation(parseFloat(accident.accident_latitude), parseFloat(accident.accident_longitude));
             }
         });
     });

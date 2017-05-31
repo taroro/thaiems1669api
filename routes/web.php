@@ -15,14 +15,18 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/accident/detail/{id?}', 'AccidentController@detail');
-Route::get('/accident/edit/{id?}', 'AccidentController@edit');
+Route::get('/fcm', function () {
+    return view('accident.testFCM');
+});
+
+Route::get('/accident/detail/{id?}', 'web\AccidentController@detail');
+Route::get('/accident/edit/{id?}', 'web\AccidentController@edit');
+Route::get('/accident/add/', 'web\AccidentController@add');
 
 // API Accident
-Route::get('/api/accident/{id?}', 'ThaiEms1669\AccidentController@index'); // Get accident's detail by id, Empty id to list all
-// Route::get('/api/accident/search/{keyword?}', 'ThaiEms1669\AccidentController@search');
-Route::post('/api/accident', 'ThaiEms1669\AccidentController@insert'); // Insert accident to DB
-Route::post('/api/accident/{id}', 'ThaiEms1669\AccidentController@update'); // Update accident detail by id
-Route::delete('/api/accident/{id}', 'ThaiEms1669\AccidentController@delete'); // Delete accident from DB by id
+Route::get('/api/accident/{id?}', 'api\AccidentController@index'); // Get accident's detail by id, Empty id to list all
+Route::post('/api/accident', 'api\AccidentController@insert'); // Insert accident to DB
+Route::post('/api/accident/{id}', 'api\AccidentController@update'); // Update accident detail by id
+Route::delete('/api/accident/{id}', 'api\AccidentController@delete'); // Delete accident from DB by id
 
 // API Car
